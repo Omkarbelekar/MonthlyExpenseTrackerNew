@@ -16,6 +16,7 @@ namespace SplitwiseCloneWebAPI
 
             var cors = new EnableCorsAttribute("https://nice-sea-044c05c1e.6.azurestaticapps.net", "*", "*");
             config.EnableCors(cors);
+            config.MessageHandlers.Add(new PreflightRequestsHandler());
 
 
             // Web API routes
