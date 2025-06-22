@@ -104,4 +104,3 @@ E:\Omkar\New Projects\SplitWise\SplitwiseCloneWebAPI\SplitwiseCloneWebAPI\obj\De
 E:\Omkar\New Projects\SplitWise\SplitwiseCloneWebAPI\SplitwiseCloneWebAPI\obj\Debug\SplitwiseCloneWebAPI.csproj.CopyComplete
 E:\Omkar\New Projects\SplitWise\SplitwiseCloneWebAPI\SplitwiseCloneWebAPI\obj\Debug\SplitwiseCloneWebAPI.dll
 E:\Omkar\New Projects\SplitWise\SplitwiseCloneWebAPI\SplitwiseCloneWebAPI\obj\Debug\SplitwiseCloneWebAPI.pdb
-E:\Omkar\New Projects\SplitWise\SplitwiseCloneWebAPI\SplitwiseCloneWebAPI\obj\Debug\SplitwiseCloneWebAPI.csproj.AssemblyReference.cache
