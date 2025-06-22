@@ -17,6 +17,12 @@ namespace SplitwiseCloneWebAPI.Controllers
         private AppDbContext db = new AppDbContext();
         ExpensesController objcommon = new ExpensesController();
 
+        [HttpPost]
+        [Route("api/Users/HelloWolrd")]
+        public string HelloWolrd()
+        {
+            return "HelloWolrd";
+        }
         // POST: api/Users/Register
         [HttpPost]
         [Route("api/Users/Register")]
