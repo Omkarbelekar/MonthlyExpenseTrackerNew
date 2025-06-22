@@ -14,7 +14,7 @@ namespace SplitwiseCloneWebAPI
             //var cors = new EnableCorsAttribute("*", "*", "*"); // Allow all — for dev
             //config.EnableCors(cors);
 
-            var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            var cors = new EnableCorsAttribute("https://nice-sea-044c05c1e.6.azurestaticapps.net", "*", "*");
             config.EnableCors(cors);
 
 

@@ -14,7 +14,8 @@ using System.Web.Http.Cors;
 
 namespace SplitwiseCloneWebAPI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "https://nice-sea-044c05c1e.6.azurestaticapps.net", headers: "*", methods: "*")]
+
     public class ExpensesController : ApiController
     {
         private AppDbContext db = new AppDbContext();
