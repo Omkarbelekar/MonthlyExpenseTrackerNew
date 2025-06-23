@@ -17,6 +17,7 @@ namespace SplitwiseCloneWebAPI
             if (request.Method == HttpMethod.Options)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
+                //response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
                 response.Headers.Add("Access-Control-Allow-Origin", "https://nice-sea-044c05c1e.6.azurestaticapps.net");
                 response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Accept");
                 response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");

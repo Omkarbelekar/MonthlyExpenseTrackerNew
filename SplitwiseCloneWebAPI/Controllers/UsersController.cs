@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 namespace SplitwiseCloneWebAPI.Controllers
 {
     [EnableCors(origins: "https://nice-sea-044c05c1e.6.azurestaticapps.net", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
 
     public class UsersController : ApiController
     {

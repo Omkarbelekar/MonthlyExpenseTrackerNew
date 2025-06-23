@@ -15,7 +15,7 @@ using System.Web.Http.Cors;
 namespace SplitwiseCloneWebAPI.Controllers
 {
     [EnableCors(origins: "https://nice-sea-044c05c1e.6.azurestaticapps.net", headers: "*", methods: "*")]
-
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ExpensesController : ApiController
     {
         private AppDbContext db = new AppDbContext();
@@ -141,6 +141,7 @@ namespace SplitwiseCloneWebAPI.Controllers
                 string ExpenseDate = ExpCatObj.ExpenseDate; // e.g., "2024-08-27"
                 DateTime parsedDate = DateTime.ParseExact(ExpenseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 string Purpose = ExpCatObj.Purpose;
+                string ExpenseMasterId = ExpCatObj.ExpenseMasterId;
                 double ExpenseAmt = Convert.ToDouble(ExpCatObj.ExpenseAmt);
 
                 string str = "";
@@ -150,7 +151,7 @@ namespace SplitwiseCloneWebAPI.Controllers
                 }
                 else
                 {
-                    str += " update CategoryExpenseMaster set CategoryMasterId='" + CategoryMasterId + "',Date='" + parsedDate + "',ExpenseAmount=" + ExpenseAmt + ",Purpose='" + Purpose + "',AddedBy='" + AddedBy + "',AddedDt=GETDATE()) ";
+                    str += " update CategoryExpenseMaster set CategoryMasterId='" + CategoryMasterId + "',Date='" + parsedDate + "',ExpenseAmount=" + ExpenseAmt + ",Purpose='" + Purpose + "',AddedBy='" + AddedBy + "',AddedDt=GETDATE() where ExpenseMasterId = '" + ExpenseMasterId + "' ";
                 }
                 ExecuteMyQuery(str);
                 resp = "true";
@@ -188,6 +189,29 @@ namespace SplitwiseCloneWebAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+        [HttpPost]
+        [Route("api/Expenses/getExepenseHistByCat")]
+        public IHttpActionResult getExepenseHistByCat(JObject obj)
+        {
+            try
+            {
+                dynamic DObj = obj;
+                string UserId = DObj.UserId;
+                string categoryId = DObj.categoryId;
+                string FromDate = DObj.FromDt;
+                string ToDate = DObj.ToDt;
+                DataTable DT = new DataTable();
+                    
+                string str = "";
+                str += " select CONVERT(DATE, Date) as ExpDate,CategoryName,* from CategoryExpenseMaster inner join ExpenseCategoryMaster on CategoryExpenseMaster.CategoryMasterId = ExpenseCategoryMaster.CategoryMasterId where CategoryExpenseMaster.CategoryMasterId = '" + categoryId + "' and CategoryExpenseMaster.IsDelete = 'N' and CategoryExpenseMaster.AddedBy ='" + UserId + "' and CONVERT(DATE, Date) Between '" + FromDate + "' and '" + ToDate + "' ";
+                DT = GetVSDataTable(str, false);
+                return Ok(DT);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
         [HttpGet]
         [Route("api/Expenses/deleteCategory/{CategoryMasterId}")]
         public IHttpActionResult deleteCategory(string CategoryMasterId)
@@ -201,6 +225,36 @@ namespace SplitwiseCloneWebAPI.Controllers
             catch (Exception ex)
             {
                 return InternalServerError(ex);
+            }
+        }
+        [HttpGet]
+        [Route("api/Expenses/deleteExpense/{ExpenseMasterId}")]
+        public IHttpActionResult deleteExpense(string ExpenseMasterId)
+        {
+            try
+            {
+                string str = " update CategoryExpenseMaster set IsDelete = 'Y' where ExpenseMasterId = '" + ExpenseMasterId + "'";
+                ExecuteMyQuery(str);
+                return Ok("true");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [HttpGet]
+        [Route("api/Expenses/getExpenseData/{ExpenseMasterId}")]
+        public DataTable getExpenseData(string ExpenseMasterId)
+        {
+            try
+            {
+                string str = " select * from  CategoryExpenseMaster where ExpenseMasterId = '" + ExpenseMasterId + "' and IsDelete = 'N'";
+                DataTable DT = GetVSDataTable(str, false);
+                return DT;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         [HttpGet]
